@@ -23,6 +23,7 @@ router
 router
   .group(() => {
     router.post('logout', [controllers.Session, 'destroy'])
+    router.get('admin', [controllers.AdminDashboard, 'index']).as('admin_dashboard')
 
     router
       .group(() => {

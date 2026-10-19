@@ -1,0 +1,59 @@
+@layouts.app({ title: 'Tableau de bord' })
+  @page({ title: 'Tableau de bord', description: "Vue d'ensemble du contenu du site." })
+    @slot('actions')
+      @link({
+        route: 'admin_pages.create',
+        class: 'inline-flex items-center justify-center gap-[7px] h-[38px] px-[15px] rounded-lg text-sm font-medium text-white transition hover:opacity-90',
+        style: 'background:linear-gradient(135deg,var(--accent),var(--accent-2))',
+      })
+        @svg('lucide:plus', { width: 15, height: 15 })
+        Créer un contenu
+      @end
+    @end
+
+    <div class="grid grid-cols-2 min-[640px]:grid-cols-3 gap-4">
+      <div class="bg-card border border-line-2 rounded-[14px] p-5">
+        <div class="text-[13px] text-muted">Pages publiées</div>
+        <div class="mt-1 text-[28px] font-semibold text-[var(--accent)]">{{ publishedCount }}</div>
+      </div>
+      <div class="bg-card border border-line-2 rounded-[14px] p-5">
+        <div class="text-[13px] text-muted">Brouillons</div>
+        <div class="mt-1 text-[28px] font-semibold text-ink">{{ draftCount }}</div>
+      </div>
+      <div class="bg-card border border-line-2 rounded-[14px] p-5">
+        <div class="text-[13px] text-muted">Utilisateurs</div>
+        <div class="mt-1 text-[28px] font-semibold text-ink">{{ userCount }}</div>
+      </div>
+    </div>
+
+    <div class="mt-8">
+      <h2 class="text-[15px] font-semibold tracking-[-0.01em] mb-3">Derniers contenus modifiés</h2>
+
+      @if(recentPages.length === 0)
+        <p class="text-muted text-[14px]">Aucune page pour le moment.</p>
+      @else
+        <div class="bg-card border border-line-2 rounded-[14px] overflow-hidden">
+          @each(p in recentPages)
+            <a
+              href="{{ urlFor('admin_pages.edit', { id: p.id }) }}"
+              class="flex items-center justify-between gap-4 px-4 py-3 border-b border-line last:border-b-0 hover:bg-paper transition"
+            >
+              <div class="min-w-0">
+                <div class="font-medium text-ink truncate">{{ p.title }}</div>
+                <div class="text-muted text-[12.5px]">par {{ p.user.fullName ?? p.user.email }}</div>
+              </div>
+              <div class="flex items-center gap-3 flex-none">
+                @if(p.status === 'published')
+                  <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[12px] font-medium bg-[color-mix(in_oklab,var(--accent)_15%,transparent)] text-[var(--accent)]">Publié</span>
+                @else
+                  <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[12px] font-medium bg-[color-mix(in_oklab,var(--muted)_15%,transparent)] text-muted">Brouillon</span>
+                @end
+                <span class="text-muted text-[12.5px]">{{ p.updatedAt ? p.updatedAt.toFormat('dd/MM/yyyy') : '—' }}</span>
+              </div>
+            </a>
+          @end
+        </div>
+      @end
+    </div>
+  @end
+@end
