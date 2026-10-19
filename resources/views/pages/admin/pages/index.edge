@@ -37,7 +37,19 @@
             @each(p in pages)
               <tr class="border-b border-line last:border-b-0">
                 <td class="px-4 py-3">
-                  <div class="font-medium text-ink">{{ p.title }}</div>
+                  @if(p.status === 'published')
+                    @link({
+                      route: 'pages.show',
+                      routeParams: { slug: p.slug },
+                      target: '_blank',
+                      rel: 'noreferrer',
+                      class: 'font-medium text-ink hover:underline decoration-[var(--line-2)] underline-offset-2',
+                    })
+                      {{ p.title }}
+                    @end
+                  @else
+                    <div class="font-medium text-ink">{{ p.title }}</div>
+                  @end
                   <div class="text-muted text-[12.5px] font-mono">/{{ p.slug }}</div>
                 </td>
                 <td class="px-4 py-3">
@@ -53,6 +65,18 @@
                 <td class="px-4 py-3 text-muted">{{ p.updatedAt ? p.updatedAt.toFormat('dd/MM/yyyy') : '—' }}</td>
                 <td class="px-4 py-3">
                   <div class="flex items-center justify-end gap-1.5">
+                    @if(p.status === 'published')
+                      @link({
+                        route: 'pages.show',
+                        routeParams: { slug: p.slug },
+                        target: '_blank',
+                        rel: 'noreferrer',
+                        class: 'relative inline-grid place-items-center w-8 h-8 rounded-lg border border-line text-muted transition hover:bg-paper hover:text-ink hover:border-line-2',
+                        title: 'Voir la page',
+                      })
+                        @svg('lucide:external-link', { width: 15, height: 15 })
+                      @end
+                    @end
                     @link({
                       route: 'admin_pages.edit',
                       routeParams: { id: p.id },
