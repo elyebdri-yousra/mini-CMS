@@ -1,61 +1,61 @@
 @layouts.marketing()
-  <div class="home">
-    <article class="prose-card">
-      <div class="pc-top">
-        <span class="pc-status mono tag" style="color: var(--ok);">
-          <span class="dot"></span>
+  <div class="min-h-screen flex flex-col items-center justify-center px-6 pt-[104px] pb-14">
+    <article class="w-[580px] max-w-full bg-card border border-line-2 rounded-[14px] px-[46px] pt-[42px] pb-6 shadow-[0_1px_0_rgba(255,255,255,0.5)_inset,0_36px_70px_-46px_rgba(10,10,11,0.45)] [&>*]:animate-chunk-rise [&>*:nth-child(2)]:[animation-delay:0.1s] [&>*:nth-child(3)]:[animation-delay:0.2s] [&>*:nth-child(4)]:[animation-delay:0.3s] [&>*:nth-child(5)]:[animation-delay:0.4s] [&>*:nth-child(6)]:[animation-delay:0.5s]">
+      <div class="flex items-center justify-between pb-[22px] border-b border-line">
+        <span class="font-mono text-[11px] tracking-[0.09em] uppercase inline-flex items-center gap-2" style="color: var(--ok);">
+          <span class="relative w-[7px] h-[7px] rounded-full border-[1.5px] border-current after:content-[''] after:absolute after:inset-[1.5px] after:rounded-full after:bg-current"></span>
           Server ready
         </span>
       </div>
 
-      <div class="pc-lead">Welcome to the power of a Hypermedia app.</div>
+      <div class="text-gradient font-serif font-normal text-[34px] leading-[1.12] tracking-[0.2px] text-balance flex flex-col mt-[26px]">Welcome to the power of a Hypermedia app.</div>
 
-      <p class="pc-para">
+      <p class="mt-4 text-sm text-ink-2 leading-[1.6] text-pretty">
         A lightweight foundation for building modern web interfaces. Straightforward, flexible, and true to the web's core simplicity.
       </p>
 
-      <p class="pc-para">
+      <p class="mt-4 text-sm text-ink-2 leading-[1.6] text-pretty">
         This page is simply proof the engine started. Everything from here is yours to build.
       </p>
 
-      <ul class="links">
-        <li>
-          <a class="lrow" href="https://docs.adonisjs.com" target="_blank" rel="noreferrer">
-            <span class="lrow__bullet"></span>
-            <span class="lrow__title">Documentation</span>
-            <span class="lrow__desc">Guides & API reference</span>
-            <span class="lrow__arrow">
+      <ul class="list-none mt-[26px] flex flex-col">
+        <li class="border-t border-line [&:last-child]:border-b">
+          <a class="group flex items-center gap-3 py-[13px] px-0.5 transition-[padding] hover:pl-2" href="https://docs.adonisjs.com" target="_blank" rel="noreferrer">
+            <span class="w-1.5 h-1.5 bg-ink rounded-[1px] flex-none"></span>
+            <span class="font-semibold text-[15px] tracking-[-0.01em]">Documentation</span>
+            <span class="text-muted text-[13.5px] whitespace-nowrap">Guides & API reference</span>
+            <span class="ml-auto text-subtle inline-flex transition group-hover:text-ink group-hover:translate-x-[3px]">
               @svg('lucide:arrow-up-right', { width: 16, height: 16 })
             </span>
           </a>
         </li>
-        <li>
-          <a class="lrow" href="https://plus.adonisjs.com" target="_blank" rel="noreferrer">
-            <span class="lrow__bullet"></span>
-            <span class="lrow__title">AdonisJS Plus</span>
-            <span class="lrow__desc">Feature packs and Flow AI</span>
-            <span class="lrow__arrow">
+        <li class="border-t border-line [&:last-child]:border-b">
+          <a class="group flex items-center gap-3 py-[13px] px-0.5 transition-[padding] hover:pl-2" href="https://plus.adonisjs.com" target="_blank" rel="noreferrer">
+            <span class="w-1.5 h-1.5 bg-ink rounded-[1px] flex-none"></span>
+            <span class="font-semibold text-[15px] tracking-[-0.01em]">AdonisJS Plus</span>
+            <span class="text-muted text-[13.5px] whitespace-nowrap">Feature packs and Flow AI</span>
+            <span class="ml-auto text-subtle inline-flex transition group-hover:text-ink group-hover:translate-x-[3px]">
               @svg('lucide:arrow-up-right', { width: 16, height: 16 })
             </span>
           </a>
         </li>
-        <li>
-          <a class="lrow" href="https://discord.com/invite/vDcEjq6" target="_blank" rel="noreferrer">
-            <span class="lrow__bullet"></span>
-            <span class="lrow__title">Discord</span>
-            <span class="lrow__desc">Meet fellow AdonisJS developers</span>
-            <span class="lrow__arrow">
+        <li class="border-t border-line [&:last-child]:border-b">
+          <a class="group flex items-center gap-3 py-[13px] px-0.5 transition-[padding] hover:pl-2" href="https://discord.com/invite/vDcEjq6" target="_blank" rel="noreferrer">
+            <span class="w-1.5 h-1.5 bg-ink rounded-[1px] flex-none"></span>
+            <span class="font-semibold text-[15px] tracking-[-0.01em]">Discord</span>
+            <span class="text-muted text-[13.5px] whitespace-nowrap">Meet fellow AdonisJS developers</span>
+            <span class="ml-auto text-subtle inline-flex transition group-hover:text-ink group-hover:translate-x-[3px]">
               @svg('lucide:arrow-up-right', { width: 16, height: 16 })
             </span>
           </a>
         </li>
       </ul>
 
-      <div class="stack">
-        <span class="tag">Built with</span>
-        <div class="pile" role="list" aria-label="Tech stack">
-          <span class="tile" role="listitem" title="AdonisJS" style="background: #5A45FF;">
-            <svg viewBox="0 0 160 160" fill="#fff" aria-hidden="true">
+      <div class="flex items-center justify-between mt-[26px] pt-[18px] border-t border-line">
+        <span class="font-mono text-[11px] tracking-[0.09em] uppercase text-subtle">Built with</span>
+        <div class="group flex" role="list" aria-label="Tech stack">
+          <span class="w-[34px] h-[34px] rounded-[9px] -ml-2 first:ml-0 grid place-items-center text-white font-semibold text-xs shadow-[0_0_0_3px_var(--card),0_2px_6px_rgba(0,0,0,0.18)] relative transition-[transform,margin] group-hover:ml-[3px] group-hover:first:ml-0" role="listitem" title="AdonisJS" style="background: #5A45FF;">
+            <svg class="w-5 h-5 block" viewBox="0 0 160 160" fill="#fff" aria-hidden="true">
               <path
                 fill-rule="evenodd"
                 clip-rule="evenodd"
@@ -63,19 +63,19 @@
               />
             </svg>
           </span>
-          <span class="tile" role="listitem" title="Edge" style="background: #4F46E5;">
-            <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
+          <span class="w-[34px] h-[34px] rounded-[9px] -ml-2 first:ml-0 grid place-items-center text-white font-semibold text-xs shadow-[0_0_0_3px_var(--card),0_2px_6px_rgba(0,0,0,0.18)] relative transition-[transform,margin] group-hover:ml-[3px] group-hover:first:ml-0" role="listitem" title="Edge" style="background: #4F46E5;">
+            <svg class="w-5 h-5 block" viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
               <path d="M6 4l6 16 6-16-3 0-3 9-3-9z" />
             </svg>
           </span>
-          <span class="tile" role="listitem" title="Alpine.js" style="background: #2D3748;">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
+          <span class="w-[34px] h-[34px] rounded-[9px] -ml-2 first:ml-0 grid place-items-center text-white font-semibold text-xs shadow-[0_0_0_3px_var(--card),0_2px_6px_rgba(0,0,0,0.18)] relative transition-[transform,margin] group-hover:ml-[3px] group-hover:first:ml-0" role="listitem" title="Alpine.js" style="background: #2D3748;">
+            <svg class="w-5 h-5 block" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M3 7l6 6-6 6h6l6-6-6-6z" fill="#77C1D2" />
               <path d="M9 7l6 6-6 6h6l6-6-6-6z" fill="#2D3441" />
             </svg>
           </span>
-          <span class="tile" role="listitem" title="TypeScript" style="background: #3178C6;">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
+          <span class="w-[34px] h-[34px] rounded-[9px] -ml-2 first:ml-0 grid place-items-center text-white font-semibold text-xs shadow-[0_0_0_3px_var(--card),0_2px_6px_rgba(0,0,0,0.18)] relative transition-[transform,margin] group-hover:ml-[3px] group-hover:first:ml-0" role="listitem" title="TypeScript" style="background: #3178C6;">
+            <svg class="w-5 h-5 block" viewBox="0 0 24 24" aria-hidden="true">
               <text
                 x="12"
                 y="17"
@@ -90,8 +90,8 @@
               </text>
             </svg>
           </span>
-          <span class="tile" role="listitem" title="Vite" style="background: #1E1B2E;">
-            <svg viewBox="0 0 410 404" aria-hidden="true">
+          <span class="w-[34px] h-[34px] rounded-[9px] -ml-2 first:ml-0 grid place-items-center text-white font-semibold text-xs shadow-[0_0_0_3px_var(--card),0_2px_6px_rgba(0,0,0,0.18)] relative transition-[transform,margin] group-hover:ml-[3px] group-hover:first:ml-0" role="listitem" title="Vite" style="background: #1E1B2E;">
+            <svg class="w-5 h-5 block" viewBox="0 0 410 404" aria-hidden="true">
               <defs>
                 <linearGradient
                   id="viteA"

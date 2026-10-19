@@ -1,14 +1,23 @@
 @let(buttonTextFromSlot = await $slots.main())
 @let(buttonText = buttonTextFromSlot.trim() ? buttonTextFromSlot : ($props.get('text') ?? ''))
 @let(variant = $props.get('variant', 'primary'))
-@let(sizeMod = $props.get('size') === 'sm' ? 'btn--sm' : '')
-@let(block = $props.get('block') ? 'btn--block' : '')
-@let(classes = ['btn', `btn--${variant}`, sizeMod, block].filter(Boolean))
+@let(size = $props.get('size') === 'sm' ? 'h-[34px] px-3 text-[13.5px]' : 'h-[38px] px-[15px] text-sm')
+@let(block = $props.get('block') ? 'w-full' : '')
+@let(variantClass = variant === 'secondary'
+  ? 'bg-card text-ink border border-line-2 hover:bg-paper focus-visible:ring-[var(--ring)]'
+  : variant === 'ghost'
+    ? 'text-ink hover:text-muted focus-visible:ring-[var(--ring)]'
+    : 'text-white hover:opacity-90 focus-visible:ring-[var(--accent-ring)]')
+@let(consumerStyle = $props.get('style') ?? '')
+@let(style = variant === 'primary'
+  ? `${consumerStyle};background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:0 8px 24px -10px var(--accent-ring)`
+  : consumerStyle)
+@let(classes = `relative inline-flex items-center justify-center gap-[7px] rounded-lg border border-transparent font-medium whitespace-nowrap transition active:scale-[0.96] focus-visible:outline-none focus-visible:ring-[3px] ${size} ${block} ${variantClass}`)
 
 <button {{
   $props
-    .except(['text', 'variant', 'size', 'block'])
-    .merge({ class: classes })
+    .except(['text', 'variant', 'size', 'block', 'style'])
+    .merge({ class: classes, style })
     .toAttrs()
 }}>
   {{{ buttonText }}}
