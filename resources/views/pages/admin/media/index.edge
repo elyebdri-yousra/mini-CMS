@@ -1,0 +1,80 @@
+@layouts.app({ title: 'Médiathèque' })
+  @page({ title: 'Médiathèque', description: "Importez des images et réutilisez-les comme couverture sur plusieurs pages." })
+    @form({
+      route: 'admin_media.store',
+      method: 'POST',
+      enctype: 'multipart/form-data',
+      class: 'flex flex-col gap-5 max-w-md bg-card border border-line-2 rounded-[14px] p-6',
+    })
+      @field.root({ name: 'image' })
+        @!field.label({ text: 'Image' })
+        @!input.control({ type: 'file', accept: 'image/*' })
+        @!field.error()
+      @end
+      @field.root({ name: 'altText' })
+        @!field.label({ text: 'Texte alternatif' })
+        @!input.control({ placeholder: "décrit l'image pour l'accessibilité" })
+        @!field.error()
+      @end
+      @!button({ text: 'Importer', type: 'submit' })
+    @end
+
+    @if(media.length === 0)
+      <div class="mt-10 text-center flex flex-col items-center gap-[13px]">
+        <div class="w-[54px] h-[54px] rounded-lg border border-line-2 bg-card grid place-items-center text-subtle">
+          @svg('lucide:image', { width: 22, height: 22 })
+        </div>
+        <h2 class="font-serif font-normal text-[22px] tracking-[0.2px] text-balance">Aucune image importée</h2>
+        <p class="text-muted text-[14.5px] leading-[1.55] text-pretty max-w-[40ch]">
+          Importez une image ci-dessus pour pouvoir l'utiliser comme couverture de page.
+        </p>
+      </div>
+    @else
+      <div class="grid grid-cols-2 min-[640px]:grid-cols-3 min-[900px]:grid-cols-4 gap-4 mt-10">
+        @each(item in media)
+          <div class="bg-card border border-line-2 rounded-[14px] overflow-hidden flex flex-col">
+            <img src="{{ item.path }}" alt="{{ item.altText ?? '' }}" class="w-full aspect-[4/3] object-cover bg-paper" />
+            <div class="p-3 flex flex-col gap-2">
+              @form({
+                route: 'admin_media.update',
+                routeParams: { id: item.id },
+                method: 'PUT',
+                class: 'flex flex-col gap-2',
+              })
+                <input
+                  type="text"
+                  name="filename"
+                  value="{{ item.filename }}"
+                  aria-label="Nom du fichier"
+                  class="w-full h-8 px-2 text-xs rounded-lg border border-line-2 bg-field text-ink focus:outline-none focus:border-[var(--accent)] focus:ring-[3px] focus:ring-[var(--accent-ring)]"
+                />
+                <input
+                  type="text"
+                  name="altText"
+                  value="{{ item.altText ?? '' }}"
+                  placeholder="Texte alternatif"
+                  aria-label="Texte alternatif"
+                  class="w-full h-8 px-2 text-xs rounded-lg border border-line-2 bg-field text-ink focus:outline-none focus:border-[var(--accent)] focus:ring-[3px] focus:ring-[var(--accent-ring)]"
+                />
+                <button type="submit" class="h-8 text-xs rounded-lg border border-line-2 bg-card text-ink hover:bg-paper transition">
+                  Enregistrer
+                </button>
+              @end
+              @form({
+                route: 'admin_media.destroy',
+                routeParams: { id: item.id },
+                method: 'DELETE',
+                'x-data': '{}',
+                'x-on:submit': "confirm('Supprimer définitivement cette image ?') || $event.preventDefault()",
+              })
+                <button type="submit" class="w-full h-8 text-xs rounded-lg border border-line-2 text-[var(--danger)] hover:bg-paper transition">
+                  Supprimer
+                </button>
+              @end
+            </div>
+          </div>
+        @end
+      </div>
+    @end
+  @end
+@end

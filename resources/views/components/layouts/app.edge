@@ -2,7 +2,14 @@
   Top-level app navigation. Add an entry here for every new area of your
   app, and it shows up in the navigation bar with its active state handled.
 --}}
-@let(nav = [{ label: 'Dashboard', route: 'dashboard', icon: 'lucide:house' }])
+@let(nav = [
+  { label: 'Tableau de bord', route: 'admin_dashboard', icon: 'lucide:layout-dashboard' },
+  { label: 'Pages', route: 'admin_pages.index', icon: 'lucide:file-text' },
+  { label: 'Médiathèque', route: 'admin_media.index', icon: 'lucide:image' },
+  ...(auth.user && auth.user.role === 'admin'
+    ? [{ label: 'Utilisateurs', route: 'admin_users.index', icon: 'lucide:users' }]
+    : []),
+])
 @let(pageTitle = $props.get('title'))
 <!DOCTYPE html>
 <html
@@ -17,30 +24,42 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{{ pageTitle ? `${pageTitle} - AdonisJS` : 'AdonisJS — Starter Kit' }}</title>
+    <title>{{ pageTitle ? `${pageTitle} · Mini CMS` : 'Mini CMS' }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('dumper')
   </head>
   <body>
-    <header class="header header--bar">
-      <div class="header__inner">
+    <header class="flex h-[60px] bg-card border-b border-line">
+      <div class="flex items-center justify-between w-full px-[30px]">
         @!logo({ size: 28 })
-        <div class="header__right">
+        <div class="flex items-center gap-[10px]">
+          @link({
+            route: 'home',
+            target: '_blank',
+            rel: 'noreferrer',
+            title: 'Voir le site',
+            class: 'relative inline-grid place-items-center w-9 h-9 rounded-lg border border-line text-muted transition hover:bg-card hover:text-ink hover:border-line-2 active:scale-[0.96]',
+          })
+            @svg('lucide:external-link', { width: 16, height: 16 })
+          @end
           @!themeToggle()
           @form({ route: 'session.destroy', method: 'POST' })
-            <button type="submit" class="btn btn--secondary btn--sm">
+            <button type="submit" class="inline-flex items-center justify-center gap-[7px] h-[34px] px-3 rounded-lg border border-line-2 bg-card text-ink text-[13.5px] font-medium hover:bg-paper transition active:scale-[0.96]">
               @svg('lucide:log-out', { width: 15, height: 15 })
-              Log out
+              Déconnexion
             </button>
           @end
         </div>
       </div>
     </header>
 
-    <nav class="subnav">
-      <div class="subnav__inner">
+    <nav class="h-12 flex items-center border-b border-line bg-card">
+      <div class="flex items-center gap-[22px] px-[30px] h-full">
         @each(item in nav)
-          @navLink({ route: item.route, class: 'subnav__item' })
+          @navLink({
+            route: item.route,
+            class: 'h-full relative inline-flex items-center gap-[7px] text-sm font-medium text-muted hover:text-ink aria-[current=page]:text-ink aria-[current=page]:after:content-[\'\'] aria-[current=page]:after:absolute aria-[current=page]:after:left-0 aria-[current=page]:after:right-0 aria-[current=page]:after:-bottom-px aria-[current=page]:after:h-0.5 aria-[current=page]:after:bg-[linear-gradient(90deg,var(--accent),var(--accent-2))]',
+          })
             @if(item.icon)
               @svg(item.icon, { width: 14, height: 14 })
             @end
@@ -50,7 +69,7 @@
       </div>
     </nav>
 
-    <div class="app-main">{{{ await $slots.main() }}}</div>
+    <div class="min-h-[calc(100vh-108px)] flex bg-paper">{{{ await $slots.main() }}}</div>
     @include('partials/flash_alerts')
   </body>
 </html>

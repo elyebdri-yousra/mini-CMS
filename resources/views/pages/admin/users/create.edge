@@ -1,0 +1,19 @@
+@layouts.app({ title: 'Nouvel utilisateur' })
+  @page({ title: 'Nouvel utilisateur', description: 'Créer un compte administrateur ou éditeur.' })
+    @let(user = null)
+    @form({ route: 'admin_users.store', method: 'POST', class: 'flex flex-col gap-6 max-w-lg' })
+      <div class="flex flex-col gap-5">
+        @include('pages/admin/users/_form')
+      </div>
+      <div class="flex gap-3">
+        @!button({ text: 'Créer', type: 'submit' })
+        @link({
+          route: 'admin_users.index',
+          class: 'inline-flex items-center justify-center gap-[7px] h-[38px] px-[15px] rounded-lg border border-line-2 bg-card text-ink text-sm font-medium hover:bg-paper transition',
+        })
+          Annuler
+        @end
+      </div>
+    @end
+  @end
+@end

@@ -1,0 +1,95 @@
+{{--
+  Formulaire partagé entre la création et l'édition.
+  `page` vaut null en création, sinon c'est la page à modifier.
+--}}
+@let(statusOld = old('status'))
+@let(currentStatus = statusOld ?? (page ? page.status : 'draft'))
+@let(showInMenuOld = old('showInMenu'))
+@let(showInMenuChecked = showInMenuOld ? true : (page ? page.showInMenu : false))
+
+@field.root({ name: 'title' })
+  @!field.label({ text: 'Titre' })
+  @!input.control({ placeholder: 'Titre de la page', required: true, minlength: 3, value: page ? page.title : '' })
+  @!field.error()
+@end
+
+@field.root({ name: 'slug' })
+  @!field.label({ text: 'Slug' })
+  @!input.control({ placeholder: 'généré automatiquement si laissé vide', value: page ? page.slug : '' })
+  @!field.error()
+@end
+
+@field.root({ name: 'excerpt' })
+  @!field.label({ text: 'Extrait' })
+  @!textarea.control({ placeholder: "court résumé affiché dans la liste publique", value: page ? page.excerpt : '' })
+  @!field.error()
+@end
+
+@field.root({ name: 'content' })
+  @!field.label({ text: 'Contenu (Markdown)' })
+  @!textarea.control({ placeholder: '# Titre\n\nTexte en **gras**, en *italique*, [lien](https://...), listes...', value: page ? page.content : '' })
+  @!field.error()
+@end
+
+<div class="grid grid-cols-1 min-[560px]:grid-cols-2 gap-5">
+  @field.root({ name: 'status' })
+    @!field.label({ text: 'Statut' })
+    @!select.control({
+      options: [
+        { value: 'draft', name: 'Brouillon', isSelected: currentStatus === 'draft' },
+        { value: 'published', name: 'Publié', isSelected: currentStatus === 'published' },
+      ],
+    })
+    @!field.error()
+  @end
+
+  @field.root({ name: 'menuOrder' })
+    @!field.label({ text: 'Ordre dans le menu' })
+    @!input.control({ type: 'number', value: page ? page.menuOrder : 0 })
+    @!field.error()
+  @end
+</div>
+
+<label class="flex items-center gap-2 text-sm text-ink">
+  <input type="checkbox" name="showInMenu" value="1" class="h-4 w-4 accent-[var(--accent)]" {{ showInMenuChecked ? 'checked' : '' }} />
+  Afficher dans le menu de navigation
+</label>
+
+@let(coverOld = old('coverMediaId'))
+@let(currentCoverId = coverOld
+  ? Number(coverOld)
+  : (page && page.coverMediaId ? page.coverMediaId : null))
+
+<div class="flex flex-col gap-2">
+  <span class="text-[13px] font-medium text-ink">Image de couverture</span>
+  @if(media.length === 0)
+    <p class="text-muted text-[13px]">
+      Aucune image dans la médiathèque.
+      @link({
+        route: 'admin_media.index',
+        class: 'text-ink underline decoration-[var(--line-2)] underline-offset-2 hover:decoration-[var(--ink)]',
+      })
+        En importer une
+      @end
+    </p>
+  @else
+    <div class="grid grid-cols-3 min-[480px]:grid-cols-4 gap-2">
+      <label class="relative cursor-pointer rounded-lg border-2 border-line-2 has-[:checked]:border-[var(--accent)] aspect-square grid place-items-center text-muted text-xs transition-colors">
+        <input type="radio" name="coverMediaId" value="" class="sr-only" {{ !currentCoverId ? 'checked' : '' }} />
+        Aucune
+      </label>
+      @each(item in media)
+        <label class="relative cursor-pointer rounded-lg overflow-hidden border-2 border-transparent has-[:checked]:border-[var(--accent)] aspect-square transition-colors">
+          <input type="radio" name="coverMediaId" value="{{ item.id }}" class="sr-only" {{ currentCoverId === item.id ? 'checked' : '' }} />
+          <img src="{{ item.path }}" alt="{{ item.altText ?? '' }}" class="w-full h-full object-cover" />
+        </label>
+      @end
+    </div>
+    @link({
+      route: 'admin_media.index',
+      class: 'text-[13px] text-ink underline decoration-[var(--line-2)] underline-offset-2 hover:decoration-[var(--ink)] self-start',
+    })
+      Gérer la médiathèque
+    @end
+  @end
+</div>

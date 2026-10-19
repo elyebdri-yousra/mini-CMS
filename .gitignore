@@ -13,6 +13,10 @@ tmp/*
 # Frontend assets compiled code
 public/assets
 
+# Uploaded media files
+public/uploads/*
+!public/uploads/.gitkeep
+
 # Build tools specific
 npm-debug.log
 yarn-error.log
@@ -24,3 +28,6 @@ yarn-error.log
 
 # Platform specific
 .DS_Store
+
+# Claude Code local tooling (dev server preview config)
+.claude/

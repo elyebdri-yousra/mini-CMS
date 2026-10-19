@@ -1,0 +1,202 @@
+@layouts.app({ title: 'Pages' })
+  @page({ title: 'Pages', description: 'Gérez les pages du site.' })
+    @slot('actions')
+      @link({
+        route: 'admin_pages.create',
+        class: 'inline-flex items-center justify-center gap-[7px] h-[38px] px-[15px] rounded-lg text-sm font-medium text-white transition hover:opacity-90',
+        style: 'background:linear-gradient(135deg,var(--accent),var(--accent-2))',
+      })
+        @svg('lucide:plus', { width: 15, height: 15 })
+        Nouvelle page
+      @end
+    @end
+
+    @let(hasFilters = !!(filters.q || filters.status || filters.author))
+
+    <form method="GET" class="flex flex-wrap items-end gap-3 mb-6">
+      <div class="flex flex-col gap-1.5 flex-1 min-w-[180px]">
+        <label for="q" class="text-[13px] font-medium text-ink">Recherche</label>
+        <input
+          type="text"
+          id="q"
+          name="q"
+          value="{{ filters.q }}"
+          placeholder="Rechercher un titre..."
+          class="h-10 px-3 bg-field border border-line-2 rounded-lg text-ink text-sm focus:outline-none focus:border-[var(--accent)] focus:ring-[3px] focus:ring-[var(--accent-ring)]"
+        />
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <label for="status" class="text-[13px] font-medium text-ink">Statut</label>
+        <select id="status" name="status" class="h-10 px-3 bg-field border border-line-2 rounded-lg text-ink text-sm">
+          <option value="" {{ !filters.status ? 'selected' : '' }}>Tous</option>
+          <option value="draft" {{ filters.status === 'draft' ? 'selected' : '' }}>Brouillon</option>
+          <option value="published" {{ filters.status === 'published' ? 'selected' : '' }}>Publié</option>
+        </select>
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <label for="author" class="text-[13px] font-medium text-ink">Auteur</label>
+        <select id="author" name="author" class="h-10 px-3 bg-field border border-line-2 rounded-lg text-ink text-sm">
+          <option value="">Tous</option>
+          @each(a in authors)
+            <option value="{{ a.id }}" {{ String(filters.author) === String(a.id) ? 'selected' : '' }}>{{ a.fullName ?? a.email }}</option>
+          @end
+        </select>
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <label for="sort" class="text-[13px] font-medium text-ink">Tri</label>
+        <select id="sort" name="sort" class="h-10 px-3 bg-field border border-line-2 rounded-lg text-ink text-sm">
+          <option value="created_desc" {{ filters.sort === 'created_desc' ? 'selected' : '' }}>Plus récent</option>
+          <option value="created_asc" {{ filters.sort === 'created_asc' ? 'selected' : '' }}>Plus ancien</option>
+          <option value="updated_desc" {{ filters.sort === 'updated_desc' ? 'selected' : '' }}>Dernière modification</option>
+        </select>
+      </div>
+      <button type="submit" class="h-10 px-4 rounded-lg border border-line-2 bg-card text-ink text-sm font-medium hover:bg-paper transition">
+        Filtrer
+      </button>
+      @if(hasFilters)
+        @link({
+          route: 'admin_pages.index',
+          class: 'h-10 inline-flex items-center px-3 text-[13px] text-muted hover:text-ink transition',
+        })
+          Réinitialiser
+        @end
+      @end
+    </form>
+
+    @if(pages.length === 0 && !hasFilters)
+      <div class="m-auto text-center max-w-[440px] px-6 py-16 flex flex-col items-center gap-[13px]">
+        <div class="w-[54px] h-[54px] rounded-lg border border-line-2 bg-card grid place-items-center text-subtle">
+          @svg('lucide:file-text', { width: 22, height: 22 })
+        </div>
+        <h2 class="font-serif font-normal text-[22px] tracking-[0.2px] text-balance">Aucune page pour le moment</h2>
+        <p class="text-muted text-[14.5px] leading-[1.55] text-pretty">
+          Créez votre première page pour commencer à publier du contenu.
+        </p>
+      </div>
+    @elseif(pages.length === 0)
+      <div class="m-auto text-center max-w-[440px] px-6 py-16 flex flex-col items-center gap-[13px]">
+        <div class="w-[54px] h-[54px] rounded-lg border border-line-2 bg-card grid place-items-center text-subtle">
+          @svg('lucide:search-x', { width: 22, height: 22 })
+        </div>
+        <h2 class="font-serif font-normal text-[22px] tracking-[0.2px] text-balance">Aucun résultat</h2>
+        <p class="text-muted text-[14.5px] leading-[1.55] text-pretty">
+          Aucune page ne correspond à ces filtres.
+        </p>
+      </div>
+    @else
+      <div class="bg-card border border-line-2 rounded-[14px] overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-line text-left text-muted text-[12.5px] uppercase tracking-wide">
+              <th class="px-4 py-3 font-medium">Titre</th>
+              <th class="px-4 py-3 font-medium">Statut</th>
+              <th class="px-4 py-3 font-medium">Auteur</th>
+              <th class="px-4 py-3 font-medium">Menu</th>
+              <th class="px-4 py-3 font-medium">Mise à jour</th>
+              <th class="px-4 py-3 font-medium text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @each(p in pages)
+              <tr class="border-b border-line last:border-b-0">
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-3">
+                    @if(p.cover)
+                      <img src="{{ p.cover.path }}" alt="" class="w-9 h-9 rounded-md object-cover flex-none" />
+                    @end
+                    <div class="min-w-0">
+                      @if(p.status === 'published')
+                        @link({
+                          route: 'pages.show',
+                          routeParams: { slug: p.slug },
+                          target: '_blank',
+                          rel: 'noreferrer',
+                          class: 'font-medium text-ink hover:underline decoration-[var(--line-2)] underline-offset-2',
+                        })
+                          {{ p.title }}
+                        @end
+                      @else
+                        <div class="font-medium text-ink">{{ p.title }}</div>
+                      @end
+                      <div class="text-muted text-[12.5px] font-mono">/{{ p.slug }}</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-4 py-3">
+                  @if(p.status === 'published')
+                    <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[12px] font-medium bg-[color-mix(in_oklab,var(--accent)_15%,transparent)] text-[var(--accent)]">Publié</span>
+                  @else
+                    <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[12px] font-medium bg-[color-mix(in_oklab,var(--muted)_15%,transparent)] text-muted">Brouillon</span>
+                  @end
+                </td>
+                <td class="px-4 py-3 text-muted">{{ p.user.fullName ?? p.user.email }}</td>
+                <td class="px-4 py-3 text-muted">
+                  {{ p.showInMenu ? `Oui (${p.menuOrder})` : 'Non' }}
+                </td>
+                <td class="px-4 py-3 text-muted">{{ p.updatedAt ? p.updatedAt.toFormat('dd/MM/yyyy') : '—' }}</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center justify-end gap-1.5">
+                    @if(p.status === 'published')
+                      @link({
+                        route: 'pages.show',
+                        routeParams: { slug: p.slug },
+                        target: '_blank',
+                        rel: 'noreferrer',
+                        class: 'relative inline-grid place-items-center w-8 h-8 rounded-lg border border-line text-muted transition hover:bg-paper hover:text-ink hover:border-line-2',
+                        title: 'Voir la page',
+                      })
+                        @svg('lucide:external-link', { width: 15, height: 15 })
+                      @end
+                    @end
+                    @link({
+                      route: 'admin_pages.edit',
+                      routeParams: { id: p.id },
+                      class: 'relative inline-grid place-items-center w-8 h-8 rounded-lg border border-line text-muted transition hover:bg-paper hover:text-ink hover:border-line-2',
+                      title: 'Modifier',
+                    })
+                      @svg('lucide:pencil', { width: 15, height: 15 })
+                    @end
+
+                    @form({
+                      route: 'admin_pages.togglePublish',
+                      routeParams: { id: p.id },
+                      method: 'PATCH',
+                    })
+                      <button
+                        type="submit"
+                        class="relative inline-grid place-items-center w-8 h-8 rounded-lg border border-line text-muted transition hover:bg-paper hover:text-ink hover:border-line-2"
+                        title="{{ p.status === 'published' ? 'Dépublier' : 'Publier' }}"
+                      >
+                        @if(p.status === 'published')
+                          @svg('lucide:eye-off', { width: 15, height: 15 })
+                        @else
+                          @svg('lucide:eye', { width: 15, height: 15 })
+                        @end
+                      </button>
+                    @end
+
+                    @form({
+                      route: 'admin_pages.destroy',
+                      routeParams: { id: p.id },
+                      method: 'DELETE',
+                      'x-data': '{}',
+                      'x-on:submit': "confirm('Supprimer définitivement cette page ?') || $event.preventDefault()",
+                    })
+                      <button
+                        type="submit"
+                        class="relative inline-grid place-items-center w-8 h-8 rounded-lg border border-line text-muted transition hover:bg-paper hover:text-[var(--danger)] hover:border-line-2"
+                        title="Supprimer"
+                      >
+                        @svg('lucide:trash-2', { width: 15, height: 15 })
+                      </button>
+                    @end
+                  </div>
+                </td>
+              </tr>
+            @end
+          </tbody>
+        </table>
+      </div>
+    @end
+  @end
+@end

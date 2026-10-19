@@ -11,26 +11,47 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AdonisJS — Starter Kit</title>
+    <title>Mon mini CMS</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('dumper')
   </head>
   <body>
-    <header class="header header--floating">
-      <div class="header__inner">
-        @!logo({ size: 28 })
-        <div class="header__right">
+    <header class="absolute inset-x-0 top-0 z-10 py-[22px]">
+      <div class="max-w-[1100px] mx-auto px-[30px] flex items-center justify-between w-full">
+        <div class="flex items-center gap-8">
+          @!logo({ size: 28 })
+          @let(navItems = $props.get('menuPages') ?? [])
+          @if(navItems.length)
+            <nav class="hidden min-[640px]:flex items-center gap-5">
+              @each(item in navItems)
+                @link({
+                  route: 'pages.show',
+                  routeParams: { slug: item.slug },
+                  class: 'text-muted hover:text-ink text-sm font-medium transition',
+                })
+                  {{ item.title }}
+                @end
+              @end
+            </nav>
+          @end
+        </div>
+        <div class="flex items-center gap-[10px]">
           @!themeToggle()
           @if(auth.user)
-            @link({ route: 'dashboard', class: 'btn btn--primary btn--sm' })
-              Dashboard
+            @link({
+              route: 'admin_dashboard',
+              class: 'inline-flex items-center justify-center gap-[7px] h-[34px] px-3 rounded-lg text-[13.5px] font-medium text-white transition hover:opacity-90',
+              style: 'background:linear-gradient(135deg,var(--accent),var(--accent-2))',
+            })
+              Administration
             @end
           @else
-            @link({ route: 'session.create', class: 'btn btn--ghost btn--sm' })
-              Sign in
-            @end
-            @link({ route: 'new_account.create', class: 'btn btn--primary btn--sm' })
-              Get started
+            @link({
+              route: 'session.create',
+              class: 'inline-flex items-center justify-center gap-[7px] h-[34px] px-3 rounded-lg text-[13.5px] font-medium text-white transition hover:opacity-90',
+              style: 'background:linear-gradient(135deg,var(--accent),var(--accent-2))',
+            })
+              Connexion
             @end
           @end
         </div>

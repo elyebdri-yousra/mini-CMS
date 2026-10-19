@@ -1,0 +1,26 @@
+@layouts.marketing({ menuPages })
+  <div class="min-h-screen px-6 pt-[140px] pb-20">
+    <article class="max-w-[720px] mx-auto">
+      @link({
+        route: 'home',
+        class: 'inline-flex items-center gap-1.5 text-muted hover:text-ink text-[13.5px] font-medium transition',
+      })
+        @svg('lucide:arrow-left', { width: 14, height: 14 })
+        Retour aux pages
+      @end
+
+      <h1 class="text-gradient font-serif font-normal text-[32px] leading-[1.18] tracking-[0.2px] text-balance mt-5">{{ page.title }}</h1>
+      @if(page.publishedAt)
+        <p class="mt-2 text-muted text-[13px] font-mono">Publié le {{ page.publishedAt.toFormat('dd/MM/yyyy') }}</p>
+      @end
+
+      @if(page.cover)
+        <img src="{{ page.cover.path }}" alt="{{ page.cover.altText ?? '' }}" class="w-full aspect-[16/9] object-cover rounded-[14px] mt-6" />
+      @end
+
+      @if(page.content)
+        <div class="prose dark:prose-invert prose-a:text-[var(--accent)] max-w-none mt-8">{{{ markdown(page.content) }}}</div>
+      @end
+    </article>
+  </div>
+@end

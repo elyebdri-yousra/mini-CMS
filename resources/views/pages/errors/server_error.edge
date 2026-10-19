@@ -1,18 +1,18 @@
 @marketing()
-  <div class="home">
-    <article class="prose-card">
-      <div class="pc-top">
-        <span class="pc-status mono tag" style="color: #c0392b;">
-          <span class="dot"></span>
+  <div class="min-h-screen flex flex-col items-center justify-center px-6 pt-[104px] pb-14">
+    <article class="w-[580px] max-w-full bg-card border border-line-2 rounded-[14px] px-[46px] pt-[42px] pb-6 shadow-[0_1px_0_rgba(255,255,255,0.5)_inset,0_36px_70px_-46px_rgba(10,10,11,0.45)]">
+      <div class="flex items-center justify-between pb-[22px] border-b border-line">
+        <span class="font-mono text-[11px] tracking-[0.09em] uppercase inline-flex items-center gap-2" style="color: var(--danger);">
+          <span class="relative w-[7px] h-[7px] rounded-full border-[1.5px] border-current after:content-[''] after:absolute after:inset-[1.5px] after:rounded-full after:bg-current"></span>
           {{ error.code || 500 }}
         </span>
       </div>
-      <div class="pc-lead">
-        <span>Something broke.</span>
-        <em>The server hit an unexpected error.</em>
+      <div class="text-ink font-serif font-normal text-[34px] leading-[1.12] tracking-[0.2px] text-balance flex flex-col mt-[26px]">
+        <span>Une erreur est survenue.</span>
+        <em>Le serveur a rencontré un problème inattendu.</em>
       </div>
-      <p class="pc-para">
-        Try again in a moment. If the problem persists, check the server logs for the underlying exception.
+      <p class="mt-4 text-sm text-ink-2 leading-[1.6] text-pretty">
+        Réessayez dans un instant. Si le problème persiste, consultez les logs du serveur.
       </p>
     </article>
   </div>

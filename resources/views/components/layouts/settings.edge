@@ -14,10 +14,14 @@
     title: 'Settings',
     description: 'Manage your account settings and preferences.',
   })
-    <div class="sidebar-layout">
-      <nav class="sidebar-layout__nav" aria-label="Settings">
+    <div class="grid grid-cols-1 min-[720px]:grid-cols-[240px_minmax(0,1fr)] gap-4 min-[720px]:gap-6 items-start">
+      <nav class="flex flex-row min-[720px]:flex-col overflow-x-auto gap-0.5 p-2 bg-card border border-line-2 rounded-[14px]" aria-label="Settings">
         @each(item in items)
-          @navLink({ route: item.route, exact: true, class: 'sidebar-layout__item' })
+          @navLink({
+            route: item.route,
+            exact: true,
+            class: 'flex items-center gap-[10px] h-9 px-[10px] rounded-lg text-sm font-medium text-muted whitespace-nowrap transition hover:text-ink aria-[current=page]:text-ink aria-[current=page]:bg-[color-mix(in_oklab,var(--accent)_12%,var(--card))] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--ring)]',
+          })
             @if(item.icon)
               @svg(item.icon, { width: 16, height: 16 })
             @end
@@ -25,7 +29,7 @@
           @end
         @end
       </nav>
-      <div class="sidebar-layout__content panel">{{{ await $slots.main() }}}</div>
+      <div class="min-w-0 bg-card border border-line-2 rounded-[14px] p-5 min-[720px]:p-7">{{{ await $slots.main() }}}</div>
     </div>
   @end
 @end

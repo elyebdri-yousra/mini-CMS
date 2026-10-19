@@ -7,8 +7,56 @@
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 
+export class MediaSchema extends BaseModel {
+  static $columns = ['altText', 'createdAt', 'filename', 'id', 'path', 'updatedAt'] as const
+  $columns = MediaSchema.$columns
+  @column()
+  declare altText: string | null
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column()
+  declare filename: string
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare path: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
+export class PageSchema extends BaseModel {
+  static $columns = ['content', 'coverMediaId', 'createdAt', 'excerpt', 'id', 'menuOrder', 'publishedAt', 'showInMenu', 'slug', 'status', 'title', 'updatedAt', 'userId'] as const
+  $columns = PageSchema.$columns
+  @column()
+  declare content: string | null
+  @column()
+  declare coverMediaId: number | null
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column()
+  declare excerpt: string | null
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare menuOrder: number
+  @column.dateTime()
+  declare publishedAt: DateTime | null
+  @column()
+  declare showInMenu: boolean
+  @column()
+  declare slug: string
+  @column()
+  declare status: string
+  @column()
+  declare title: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+  @column()
+  declare userId: number
+}
+
 export class UserSchema extends BaseModel {
-  static $columns = ['createdAt', 'email', 'fullName', 'id', 'password', 'updatedAt'] as const
+  static $columns = ['createdAt', 'email', 'fullName', 'id', 'password', 'role', 'updatedAt'] as const
   $columns = UserSchema.$columns
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
@@ -20,6 +68,8 @@ export class UserSchema extends BaseModel {
   declare id: number
   @column({ serializeAs: null })
   declare password: string
+  @column()
+  declare role: string
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
 }
