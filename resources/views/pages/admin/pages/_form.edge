@@ -26,8 +26,8 @@
 @end
 
 @field.root({ name: 'content' })
-  @!field.label({ text: 'Contenu' })
-  @!textarea.control({ placeholder: 'Contenu de la page', value: page ? page.content : '' })
+  @!field.label({ text: 'Contenu (Markdown)' })
+  @!textarea.control({ placeholder: '# Titre\n\nTexte en **gras**, en *italique*, [lien](https://...), listes...', value: page ? page.content : '' })
   @!field.error()
 @end
 

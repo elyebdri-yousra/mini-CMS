@@ -1,4 +1,8 @@
 @import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+/* active les classes dark: basées sur html[data-theme="dark"] (pas prefers-color-scheme) */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
 
 /* ==========================================================================
    Design tokens. Colors flip automatically via html[data-theme], and are
