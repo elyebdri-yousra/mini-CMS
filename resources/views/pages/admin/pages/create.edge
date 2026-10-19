@@ -1,0 +1,19 @@
+@layouts.app({ title: 'Nouvelle page' })
+  @page({ title: 'Nouvelle page', description: 'Créer une nouvelle page du site.' })
+    @let(page = null)
+    @form({ route: 'admin_pages.store', method: 'POST', class: 'flex flex-col gap-6 max-w-2xl' })
+      <div class="flex flex-col gap-5">
+        @include('pages/admin/pages/_form')
+      </div>
+      <div class="flex gap-3">
+        @!button({ text: 'Créer la page', type: 'submit' })
+        @link({
+          route: 'admin_pages.index',
+          class: 'inline-flex items-center justify-center gap-[7px] h-[38px] px-[15px] rounded-lg border border-line-2 bg-card text-ink text-sm font-medium hover:bg-paper transition',
+        })
+          Annuler
+        @end
+      </div>
+    @end
+  @end
+@end

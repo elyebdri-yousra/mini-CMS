@@ -1,0 +1,107 @@
+@layouts.app({ title: 'Pages' })
+  @page({ title: 'Pages', description: 'Gérez les pages du site.' })
+    @slot('actions')
+      @link({
+        route: 'admin_pages.create',
+        class: 'inline-flex items-center justify-center gap-[7px] h-[38px] px-[15px] rounded-lg text-sm font-medium text-white transition hover:opacity-90',
+        style: 'background:linear-gradient(135deg,var(--accent),var(--accent-2))',
+      })
+        @svg('lucide:plus', { width: 15, height: 15 })
+        Nouvelle page
+      @end
+    @end
+
+    @if(pages.length === 0)
+      <div class="m-auto text-center max-w-[440px] px-6 py-16 flex flex-col items-center gap-[13px]">
+        <div class="w-[54px] h-[54px] rounded-lg border border-line-2 bg-card grid place-items-center text-subtle">
+          @svg('lucide:file-text', { width: 22, height: 22 })
+        </div>
+        <h2 class="font-serif font-normal text-[22px] tracking-[0.2px] text-balance">Aucune page pour le moment</h2>
+        <p class="text-muted text-[14.5px] leading-[1.55] text-pretty">
+          Créez votre première page pour commencer à publier du contenu.
+        </p>
+      </div>
+    @else
+      <div class="bg-card border border-line-2 rounded-[14px] overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-line text-left text-muted text-[12.5px] uppercase tracking-wide">
+              <th class="px-4 py-3 font-medium">Titre</th>
+              <th class="px-4 py-3 font-medium">Statut</th>
+              <th class="px-4 py-3 font-medium">Menu</th>
+              <th class="px-4 py-3 font-medium">Mise à jour</th>
+              <th class="px-4 py-3 font-medium text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @each(p in pages)
+              <tr class="border-b border-line last:border-b-0">
+                <td class="px-4 py-3">
+                  <div class="font-medium text-ink">{{ p.title }}</div>
+                  <div class="text-muted text-[12.5px] font-mono">/{{ p.slug }}</div>
+                </td>
+                <td class="px-4 py-3">
+                  @if(p.status === 'published')
+                    <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[12px] font-medium bg-[color-mix(in_oklab,var(--accent)_15%,transparent)] text-[var(--accent)]">Publié</span>
+                  @else
+                    <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[12px] font-medium bg-[color-mix(in_oklab,var(--muted)_15%,transparent)] text-muted">Brouillon</span>
+                  @end
+                </td>
+                <td class="px-4 py-3 text-muted">
+                  {{ p.showInMenu ? `Oui (${p.menuOrder})` : 'Non' }}
+                </td>
+                <td class="px-4 py-3 text-muted">{{ p.updatedAt ? p.updatedAt.toFormat('dd/MM/yyyy') : '—' }}</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center justify-end gap-1.5">
+                    @link({
+                      route: 'admin_pages.edit',
+                      routeParams: { id: p.id },
+                      class: 'relative inline-grid place-items-center w-8 h-8 rounded-lg border border-line text-muted transition hover:bg-paper hover:text-ink hover:border-line-2',
+                      title: 'Modifier',
+                    })
+                      @svg('lucide:pencil', { width: 15, height: 15 })
+                    @end
+
+                    @form({
+                      route: 'admin_pages.togglePublish',
+                      routeParams: { id: p.id },
+                      method: 'PATCH',
+                    })
+                      <button
+                        type="submit"
+                        class="relative inline-grid place-items-center w-8 h-8 rounded-lg border border-line text-muted transition hover:bg-paper hover:text-ink hover:border-line-2"
+                        title="{{ p.status === 'published' ? 'Dépublier' : 'Publier' }}"
+                      >
+                        @if(p.status === 'published')
+                          @svg('lucide:eye-off', { width: 15, height: 15 })
+                        @else
+                          @svg('lucide:eye', { width: 15, height: 15 })
+                        @end
+                      </button>
+                    @end
+
+                    @form({
+                      route: 'admin_pages.destroy',
+                      routeParams: { id: p.id },
+                      method: 'DELETE',
+                      'x-data': '{}',
+                      'x-on:submit': "confirm('Supprimer définitivement cette page ?') || $event.preventDefault()",
+                    })
+                      <button
+                        type="submit"
+                        class="relative inline-grid place-items-center w-8 h-8 rounded-lg border border-line text-muted transition hover:bg-paper hover:text-[var(--danger)] hover:border-line-2"
+                        title="Supprimer"
+                      >
+                        @svg('lucide:trash-2', { width: 15, height: 15 })
+                      </button>
+                    @end
+                  </div>
+                </td>
+              </tr>
+            @end
+          </tbody>
+        </table>
+      </div>
+    @end
+  @end
+@end

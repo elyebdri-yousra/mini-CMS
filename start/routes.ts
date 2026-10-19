@@ -22,7 +22,19 @@ router
 
 router
   .group(() => {
-    router.on('/dashboard').render('pages/dashboard').as('dashboard')
     router.post('logout', [controllers.Session, 'destroy'])
+
+    router
+      .group(() => {
+        router.get('/', [controllers.AdminPages, 'index']).as('index')
+        router.get('create', [controllers.AdminPages, 'create']).as('create')
+        router.post('/', [controllers.AdminPages, 'store']).as('store')
+        router.get(':id/edit', [controllers.AdminPages, 'edit']).as('edit')
+        router.put(':id', [controllers.AdminPages, 'update']).as('update')
+        router.delete(':id', [controllers.AdminPages, 'destroy']).as('destroy')
+        router.patch(':id/publish', [controllers.AdminPages, 'togglePublish']).as('togglePublish')
+      })
+      .prefix('admin/pages')
+      .as('admin_pages')
   })
   .use(middleware.auth())

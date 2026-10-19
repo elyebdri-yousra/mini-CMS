@@ -11,7 +11,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AdonisJS — Starter Kit</title>
+    <title>Mini CMS</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('dumper')
   </head>
@@ -23,7 +23,7 @@
           @!themeToggle()
           @if(auth.user)
             @link({
-              route: 'dashboard',
+              route: 'admin_pages.index',
               class: 'inline-flex items-center justify-center gap-[7px] h-[34px] px-3 rounded-lg text-[13.5px] font-medium text-white transition hover:opacity-90',
               style: 'background:linear-gradient(135deg,var(--accent),var(--accent-2))',
             })

@@ -1,0 +1,56 @@
+{{--
+  Formulaire partagé entre la création et l'édition.
+  `page` vaut null en création, sinon c'est la page à modifier.
+--}}
+@let(statusOld = old('status'))
+@let(currentStatus = statusOld ?? (page ? page.status : 'draft'))
+@let(showInMenuOld = old('showInMenu'))
+@let(showInMenuChecked = showInMenuOld ? true : (page ? page.showInMenu : false))
+
+@field.root({ name: 'title' })
+  @!field.label({ text: 'Titre' })
+  @!input.control({ placeholder: 'Titre de la page', required: true, minlength: 3, value: page ? page.title : '' })
+  @!field.error()
+@end
+
+@field.root({ name: 'slug' })
+  @!field.label({ text: 'Slug' })
+  @!input.control({ placeholder: 'généré automatiquement si laissé vide', value: page ? page.slug : '' })
+  @!field.error()
+@end
+
+@field.root({ name: 'excerpt' })
+  @!field.label({ text: 'Extrait' })
+  @!textarea.control({ placeholder: "court résumé affiché dans la liste publique", value: page ? page.excerpt : '' })
+  @!field.error()
+@end
+
+@field.root({ name: 'content' })
+  @!field.label({ text: 'Contenu' })
+  @!textarea.control({ placeholder: 'Contenu de la page', value: page ? page.content : '' })
+  @!field.error()
+@end
+
+<div class="grid grid-cols-1 min-[560px]:grid-cols-2 gap-5">
+  @field.root({ name: 'status' })
+    @!field.label({ text: 'Statut' })
+    @!select.control({
+      options: [
+        { value: 'draft', name: 'Brouillon', isSelected: currentStatus === 'draft' },
+        { value: 'published', name: 'Publié', isSelected: currentStatus === 'published' },
+      ],
+    })
+    @!field.error()
+  @end
+
+  @field.root({ name: 'menuOrder' })
+    @!field.label({ text: 'Ordre dans le menu' })
+    @!input.control({ type: 'number', value: page ? page.menuOrder : 0 })
+    @!field.error()
+  @end
+</div>
+
+<label class="flex items-center gap-2 text-sm text-ink">
+  <input type="checkbox" name="showInMenu" value="1" class="h-4 w-4 accent-[var(--accent)]" {{ showInMenuChecked ? 'checked' : '' }} />
+  Afficher dans le menu de navigation
+</label>
