@@ -1,16 +1,18 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Page from '#models/page'
+import Media from '#models/media'
 import { pageValidator } from '#validators/page'
 import { DateTime } from 'luxon'
 
 export default class AdminPagesController {
   async index({ view }: HttpContext) {
-    const pages = await Page.query().orderBy('createdAt', 'desc')
+    const pages = await Page.query().preload('cover').orderBy('createdAt', 'desc')
     return view.render('pages/admin/pages/index', { pages })
   }
 
   async create({ view }: HttpContext) {
-    return view.render('pages/admin/pages/create')
+    const media = await Media.query().orderBy('createdAt', 'desc')
+    return view.render('pages/admin/pages/create', { media })
   }
 
   async store({ request, response, auth, session }: HttpContext) {
@@ -22,6 +24,7 @@ export default class AdminPagesController {
     page.merge({
       ...data,
       showInMenu: request.input('showInMenu') === '1',
+      coverMediaId: request.input('coverMediaId') || null,
       userId: auth.user!.id,
       publishedAt: data.status === 'published' ? DateTime.now() : null,
     })
@@ -33,7 +36,8 @@ export default class AdminPagesController {
 
   async edit({ params, view }: HttpContext) {
     const page = await Page.findOrFail(params.id)
-    return view.render('pages/admin/pages/edit', { page })
+    const media = await Media.query().orderBy('createdAt', 'desc')
+    return view.render('pages/admin/pages/edit', { page, media })
   }
 
   async update({ params, request, response, session }: HttpContext) {
@@ -47,7 +51,11 @@ export default class AdminPagesController {
     })
 
     const wasPublished = page.status === 'published'
-    page.merge({ ...data, showInMenu: request.input('showInMenu') === '1' })
+    page.merge({
+      ...data,
+      showInMenu: request.input('showInMenu') === '1',
+      coverMediaId: request.input('coverMediaId') || null,
+    })
 
     if (data.status === 'published' && !wasPublished) {
       page.publishedAt = DateTime.now()

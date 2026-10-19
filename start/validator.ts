@@ -35,6 +35,9 @@ vine.messagesProvider = new SimpleMessagesProvider(
     number: 'Le champ {{ field }} doit être un nombre.',
     'database.unique': 'Cette valeur du champ {{ field }} est déjà utilisée.',
     sameAs: 'Le champ {{ field }} doit être identique au champ {{ otherField }}.',
+    file: 'Le champ {{ field }} doit être un fichier.',
+    'file.size': 'Le fichier {{ field }} dépasse la taille autorisée.',
+    'file.extname': "Le format du fichier {{ field }} n'est pas autorisé.",
   },
   {
     title: 'titre',
@@ -47,5 +50,8 @@ vine.messagesProvider = new SimpleMessagesProvider(
     password: 'mot de passe',
     passwordConfirmation: 'confirmation du mot de passe',
     fullName: 'nom complet',
+    image: 'image',
+    altText: 'texte alternatif',
+    filename: 'nom du fichier',
   }
 )

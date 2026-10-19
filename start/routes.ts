@@ -36,6 +36,16 @@ router
       })
       .prefix('admin/pages')
       .as('admin_pages')
+
+    router
+      .group(() => {
+        router.get('/', [controllers.AdminMedia, 'index']).as('index')
+        router.post('/', [controllers.AdminMedia, 'store']).as('store')
+        router.put(':id', [controllers.AdminMedia, 'update']).as('update')
+        router.delete(':id', [controllers.AdminMedia, 'destroy']).as('destroy')
+      })
+      .prefix('admin/media')
+      .as('admin_media')
   })
   .use(middleware.auth())
 
