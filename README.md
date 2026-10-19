@@ -82,9 +82,10 @@ Voir `.env.example`. Les variables `ADMIN_EMAIL` / `ADMIN_PASSWORD` sont lues pa
 
 ## Utilisation de l'IA
 
-<!-- À compléter : outils utilisés, avantages, difficultés rencontrées, erreurs corrigées -->
+- **Outils utilisés** : Claude (Claude Code), déboguer en conditions réelles (navigateur piloté) et discuter des choix techniques (structure des routes, validation, modèle de données).
 
-- **Outils utilisés** :
-- **Avantages constatés** :
-- **Difficultés rencontrées** :
-- **Erreurs corrigées** :
+- **Avantages constatés** : mise en place rapide des parties répétitives (migrations, CRUD, validation VineJS), bonne connaissance des conventions AdonisJS/Lucid, aide précieuse pour traduire les messages d'erreur et tester chaque fonctionnalité en direct avant de passer à la suivante.
+
+- **Difficultés rencontrées** : certaines suppositions de l'IA se sont révélées fausses et ont nécessité une vérification manuelle (comportement de SQLite avec les booléens, portée des variables dans les composants Edge). La demande de fonctionnalités bonus en cours de route a aussi demandé de cadrer précisément le périmètre pour ne pas perdre de temps.
+
+- **Erreurs corrigées** : un bug où le style du bouton principal ne s'affichait pas (écrasé par une valeur existante dans le composant), une requête SQL comparant un booléen JS (`true`) à un entier SQLite (`1`) qui empêchait le menu de s'afficher, une variable non transmise à un layout Edge isolé, et l'absence de contrainte `ON DELETE SET NULL` appliquée par SQLite (gérée manuellement dans le code).
