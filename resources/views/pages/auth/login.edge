@@ -1,6 +1,6 @@
 @layouts.auth()
-  <h1 class="text-gradient font-serif font-normal text-[27px] tracking-[0.2px] text-balance">Welcome back</h1>
-  <p class="text-muted text-sm mt-1">Sign in to continue building.</p>
+  <h1 class="text-gradient font-serif font-normal text-[27px] tracking-[0.2px] text-balance">Bon retour</h1>
+  <p class="text-muted text-sm mt-1">Connectez-vous à l'espace d'administration.</p>
   @form({
     route: 'session.store',
     method: 'POST',
@@ -13,12 +13,12 @@
       @!input.control({
         type: 'email',
         autocomplete: 'username',
-        placeholder: 'you@example.com',
+        placeholder: 'vous@exemple.com',
       })
       @!field.error()
     @end
     @field.root({ name: 'password' })
-      @!field.label({ text: 'Password' })
+      @!field.label({ text: 'Mot de passe' })
       @!input.control({
         type: 'password',
         autocomplete: 'current-password',
@@ -27,23 +27,12 @@
       @!field.error()
     @end
     @!button({
-      text: 'Sign in',
+      text: 'Se connecter',
       type: 'submit',
       block: true,
       style: 'margin-top: 4px;',
       'x-bind:disabled': 'submitting',
-      'x-text': "submitting ? 'One moment…' : 'Sign in'",
+      'x-text': "submitting ? 'Un instant…' : 'Se connecter'",
     })
   @end
-
-  <p class="mt-[18px] text-center text-[13px] text-muted">
-
-
-    New here?
-
-
-    @link({ route: 'new_account.create', class: 'text-ink underline decoration-[var(--line-2)] underline-offset-[3px] decoration-1 hover:decoration-[var(--ink)] transition-[text-decoration-color]' })
-      Create an account
-    @end
-  </p>
 @end
