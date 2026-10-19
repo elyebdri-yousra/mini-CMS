@@ -47,6 +47,19 @@ router
       })
       .prefix('admin/media')
       .as('admin_media')
+
+    router
+      .group(() => {
+        router.get('/', [controllers.AdminUsers, 'index']).as('index')
+        router.get('create', [controllers.AdminUsers, 'create']).as('create')
+        router.post('/', [controllers.AdminUsers, 'store']).as('store')
+        router.get(':id/edit', [controllers.AdminUsers, 'edit']).as('edit')
+        router.put(':id', [controllers.AdminUsers, 'update']).as('update')
+        router.delete(':id', [controllers.AdminUsers, 'destroy']).as('destroy')
+      })
+      .prefix('admin/users')
+      .as('admin_users')
+      .use(middleware.adminOnly())
   })
   .use(middleware.auth())
 
