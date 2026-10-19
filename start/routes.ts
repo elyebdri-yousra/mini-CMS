@@ -12,7 +12,6 @@ import { controllers } from '#generated/controllers'
 import router from '@adonisjs/core/services/router'
 
 router.get('/', [controllers.PublicPages, 'index']).as('home')
-router.get('p/:slug', [controllers.PublicPages, 'show']).as('pages.show')
 
 router
   .group(() => {
@@ -39,3 +38,7 @@ router
       .as('admin_pages')
   })
   .use(middleware.auth())
+
+// catch-all pour les pages publiées, enregistrée en dernier pour ne pas
+// capturer les routes au-dessus (/login, /admin/pages, ...)
+router.get(':slug', [controllers.PublicPages, 'show']).as('pages.show')
