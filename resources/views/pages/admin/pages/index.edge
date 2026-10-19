@@ -37,20 +37,27 @@
             @each(p in pages)
               <tr class="border-b border-line last:border-b-0">
                 <td class="px-4 py-3">
-                  @if(p.status === 'published')
-                    @link({
-                      route: 'pages.show',
-                      routeParams: { slug: p.slug },
-                      target: '_blank',
-                      rel: 'noreferrer',
-                      class: 'font-medium text-ink hover:underline decoration-[var(--line-2)] underline-offset-2',
-                    })
-                      {{ p.title }}
+                  <div class="flex items-center gap-3">
+                    @if(p.cover)
+                      <img src="{{ p.cover.path }}" alt="" class="w-9 h-9 rounded-md object-cover flex-none" />
                     @end
-                  @else
-                    <div class="font-medium text-ink">{{ p.title }}</div>
-                  @end
-                  <div class="text-muted text-[12.5px] font-mono">/{{ p.slug }}</div>
+                    <div class="min-w-0">
+                      @if(p.status === 'published')
+                        @link({
+                          route: 'pages.show',
+                          routeParams: { slug: p.slug },
+                          target: '_blank',
+                          rel: 'noreferrer',
+                          class: 'font-medium text-ink hover:underline decoration-[var(--line-2)] underline-offset-2',
+                        })
+                          {{ p.title }}
+                        @end
+                      @else
+                        <div class="font-medium text-ink">{{ p.title }}</div>
+                      @end
+                      <div class="text-muted text-[12.5px] font-mono">/{{ p.slug }}</div>
+                    </div>
+                  </div>
                 </td>
                 <td class="px-4 py-3">
                   @if(p.status === 'published')

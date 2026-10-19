@@ -3,7 +3,10 @@ import Page from '#models/page'
 
 export default class PublicPagesController {
   async index({ view }: HttpContext) {
-    const pages = await Page.query().where('status', 'published').orderBy('publishedAt', 'desc')
+    const pages = await Page.query()
+      .where('status', 'published')
+      .preload('cover')
+      .orderBy('publishedAt', 'desc')
     return view.render('pages/home', { pages, menuPages: await this.menu() })
   }
 
@@ -13,6 +16,7 @@ export default class PublicPagesController {
     const page = await Page.query()
       .where('slug', params.slug)
       .where('status', 'published')
+      .preload('cover')
       .firstOrFail()
 
     return view.render('pages/show', { page, menuPages: await this.menu() })

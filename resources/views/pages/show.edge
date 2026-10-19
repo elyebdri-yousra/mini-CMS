@@ -14,6 +14,10 @@
         <p class="mt-2 text-muted text-[13px] font-mono">Publié le {{ page.publishedAt.toFormat('dd/MM/yyyy') }}</p>
       @end
 
+      @if(page.cover)
+        <img src="{{ page.cover.path }}" alt="{{ page.cover.altText ?? '' }}" class="w-full aspect-[16/9] object-cover rounded-[14px] mt-6" />
+      @end
+
       @if(page.content)
         <div class="prose dark:prose-invert prose-a:text-[var(--accent)] max-w-none mt-8">{{{ markdown(page.content) }}}</div>
       @end
