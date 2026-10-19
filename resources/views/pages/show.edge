@@ -15,7 +15,7 @@
       @end
 
       @if(page.content)
-        <div class="mt-8 text-[15px] leading-[1.7] text-ink-2 whitespace-pre-line text-pretty">{{ page.content }}</div>
+        <div class="prose dark:prose-invert prose-a:text-[var(--accent)] max-w-none mt-8">{{{ markdown(page.content) }}}</div>
       @end
     </article>
   </div>
