@@ -2,7 +2,7 @@
   Top-level app navigation. Add an entry here for every new area of your
   app, and it shows up in the navigation bar with its active state handled.
 --}}
-@let(nav = [{ label: 'Dashboard', route: 'dashboard', icon: 'lucide:house' }])
+@let(nav = [{ label: 'Pages', route: 'admin_pages.index', icon: 'lucide:file-text' }])
 @let(pageTitle = $props.get('title'))
 <!DOCTYPE html>
 <html
@@ -17,7 +17,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{{ pageTitle ? `${pageTitle} - AdonisJS` : 'AdonisJS — Starter Kit' }}</title>
+    <title>{{ pageTitle ? `${pageTitle} · Mini CMS` : 'Mini CMS' }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('dumper')
   </head>
