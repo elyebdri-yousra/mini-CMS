@@ -18,7 +18,23 @@
   <body>
     <header class="absolute inset-x-0 top-0 z-10 py-[22px]">
       <div class="max-w-[1100px] mx-auto px-[30px] flex items-center justify-between w-full">
-        @!logo({ size: 28 })
+        <div class="flex items-center gap-8">
+          @!logo({ size: 28 })
+          @let(navItems = $props.get('menuPages') ?? [])
+          @if(navItems.length)
+            <nav class="hidden min-[640px]:flex items-center gap-5">
+              @each(item in navItems)
+                @link({
+                  route: 'pages.show',
+                  routeParams: { slug: item.slug },
+                  class: 'text-muted hover:text-ink text-sm font-medium transition',
+                })
+                  {{ item.title }}
+                @end
+              @end
+            </nav>
+          @end
+        </div>
         <div class="flex items-center gap-[10px]">
           @!themeToggle()
           @if(auth.user)
