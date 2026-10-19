@@ -1,13 +1,45 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Page from '#models/page'
 import Media from '#models/media'
+import User from '#models/user'
 import { pageValidator } from '#validators/page'
 import { DateTime } from 'luxon'
 
 export default class AdminPagesController {
-  async index({ view }: HttpContext) {
-    const pages = await Page.query().preload('cover').orderBy('createdAt', 'desc')
-    return view.render('pages/admin/pages/index', { pages })
+  async index({ view, request }: HttpContext) {
+    const q = request.input('q', '').trim()
+    const status = request.input('status', '')
+    const author = request.input('author', '')
+    const sort = request.input('sort', 'created_desc')
+
+    const query = Page.query().preload('cover').preload('user')
+
+    if (q) {
+      query.whereLike('title', `%${q}%`)
+    }
+    if (status) {
+      query.where('status', status)
+    }
+    if (author) {
+      query.where('userId', author)
+    }
+
+    if (sort === 'created_asc') {
+      query.orderBy('createdAt', 'asc')
+    } else if (sort === 'updated_desc') {
+      query.orderBy('updatedAt', 'desc')
+    } else {
+      query.orderBy('createdAt', 'desc')
+    }
+
+    const pages = await query
+    const authors = await User.query().orderBy('fullName', 'asc')
+
+    return view.render('pages/admin/pages/index', {
+      pages,
+      authors,
+      filters: { q, status, author, sort },
+    })
   }
 
   async create({ view }: HttpContext) {
