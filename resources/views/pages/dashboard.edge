@@ -1,16 +1,16 @@
 @layouts.app({ title: 'Dashboard' })
   @page()
-    <div class="empty">
-      <div class="empty__mark">
+    <div class="m-auto text-center max-w-[440px] px-6 py-10 flex flex-col items-center gap-[13px]">
+      <div class="w-[54px] h-[54px] rounded-lg border border-line-2 bg-card grid place-items-center text-subtle">
         @svg('lucide:layout-grid', { width: 22, height: 22 })
       </div>
-      <h1>Your dashboard is ready</h1>
-      <p>
+      <h1 class="font-serif font-normal text-[26px] tracking-[0.2px] text-balance">Your dashboard is ready</h1>
+      <p class="text-muted text-[14.5px] leading-[1.55] text-pretty">
         It's empty on purpose. A clean starting point with nothing to undo. Add your first route and component to begin.
       </p>
-      <p class="mono" style="font-size: 12.5px; color: var(--subtle); margin-top: 4px;">
+      <p class="font-mono text-xs text-subtle mt-1">
         Start in
-        <span class="kbd">resources/views/pages/dashboard.edge</span>
+        <span class="font-mono text-xs bg-card border border-line-2 rounded-md px-[7px] py-0.5 text-muted">resources/views/pages/dashboard.edge</span>
       </p>
     </div>
   @end

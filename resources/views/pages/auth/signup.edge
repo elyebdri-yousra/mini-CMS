@@ -1,10 +1,10 @@
 @layouts.auth()
-  <h1 class="auth__title">Create your account</h1>
-  <p class="auth__sub">Start building with the starter kit.</p>
+  <h1 class="text-gradient font-serif font-normal text-[27px] tracking-[0.2px] text-balance">Create your account</h1>
+  <p class="text-muted text-sm mt-1">Start building with the starter kit.</p>
   @form({
     route: 'new_account.store',
     method: 'POST',
-    class: 'auth__form',
+    class: 'flex flex-col gap-[15px] mt-[22px]',
     'x-data': '{ submitting: false }',
     'x-on:submit': 'submitting = true',
   })
@@ -50,11 +50,11 @@
     })
   @end
 
-  <p class="auth__foot">
-    
+  <p class="mt-[18px] text-center text-[13px] text-muted">
+
     Already have an account?
 
-    @link({ route: 'session.create', class: 'il' })
+    @link({ route: 'session.create', class: 'text-ink underline decoration-[var(--line-2)] underline-offset-[3px] decoration-1 hover:decoration-[var(--ink)] transition-[text-decoration-color]' })
       Sign in
     @end
   </p>

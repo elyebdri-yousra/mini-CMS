@@ -2,7 +2,7 @@
 @let(inputValue = useOldValue
   ? $context.oldValue || $props.get('value') || ''
   : $props.get('value') || '')
-@let(classes = ['field__input'])
+@let(classes = 'w-full h-10 px-3 bg-field border border-line-2 rounded-lg text-ink text-sm shadow-[0_1px_1px_rgba(10,10,11,0.03)] transition placeholder:text-subtle focus:outline-none focus:border-[var(--accent)] focus:ring-[3px] focus:ring-[var(--accent-ring)] aria-[invalid="true"]:border-[var(--danger)] data-[invalid="true"]:border-[var(--danger)]')
 
 <input {{
   $props

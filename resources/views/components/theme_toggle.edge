@@ -5,7 +5,7 @@
 
 <button
   type="button"
-  class="iconbtn"
+  class="relative inline-grid place-items-center w-9 h-9 rounded-lg border border-line text-muted transition hover:bg-card hover:text-ink hover:border-line-2 active:scale-[0.96]"
   data-initial-theme="{{ currentTheme }}"
   x-data="themeToggle"
   x-bind:aria-label="theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'"
@@ -15,11 +15,11 @@
   @svg('lucide:sun', {
     width: 16,
     height: 16,
-    class: 'themetoggle__icon themetoggle__icon--sun',
+    class: 'themetoggle__icon themetoggle__icon--sun [grid-area:1/1]',
   })
   @svg('lucide:moon', {
     width: 16,
     height: 16,
-    class: 'themetoggle__icon themetoggle__icon--moon',
+    class: 'themetoggle__icon themetoggle__icon--moon [grid-area:1/1]',
   })
 </button>
