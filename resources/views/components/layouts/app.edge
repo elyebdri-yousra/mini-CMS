@@ -6,6 +6,9 @@
   { label: 'Tableau de bord', route: 'admin_dashboard', icon: 'lucide:layout-dashboard' },
   { label: 'Pages', route: 'admin_pages.index', icon: 'lucide:file-text' },
   { label: 'Médiathèque', route: 'admin_media.index', icon: 'lucide:image' },
+  ...(auth.user && auth.user.role === 'admin'
+    ? [{ label: 'Utilisateurs', route: 'admin_users.index', icon: 'lucide:users' }]
+    : []),
 ])
 @let(pageTitle = $props.get('title'))
 <!DOCTYPE html>

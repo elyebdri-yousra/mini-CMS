@@ -1,0 +1,38 @@
+{{--
+  Formulaire partagé entre la création et l'édition.
+  `user` vaut null en création, sinon c'est le compte à modifier.
+--}}
+@field.root({ name: 'fullName' })
+  @!field.label({ text: 'Nom complet' })
+  @!input.control({ placeholder: 'Ada Lovelace', required: true, value: user ? user.fullName : '' })
+  @!field.error()
+@end
+
+@field.root({ name: 'email' })
+  @!field.label({ text: 'Email' })
+  @!input.control({ type: 'email', placeholder: 'vous@exemple.com', required: true, value: user ? user.email : '' })
+  @!field.error()
+@end
+
+@field.root({ name: 'password' })
+  @!field.label({ text: user ? 'Nouveau mot de passe' : 'Mot de passe' })
+  @!input.control({
+    type: 'password',
+    placeholder: user ? 'laisser vide pour ne pas changer' : '••••••••',
+    required: !user,
+  })
+  @!field.error()
+@end
+
+@let(roleOld = old('role'))
+@let(currentRole = roleOld ?? (user ? user.role : 'editor'))
+@field.root({ name: 'role' })
+  @!field.label({ text: 'Rôle' })
+  @!select.control({
+    options: [
+      { value: 'editor', name: 'Éditeur', isSelected: currentRole === 'editor' },
+      { value: 'admin', name: 'Administrateur', isSelected: currentRole === 'admin' },
+    ],
+  })
+  @!field.error()
+@end

@@ -4,9 +4,10 @@
  */
 
 export const controllers = {
+  Session: () => import('#controllers/session_controller'),
   AdminPages: () => import('#controllers/admin_pages_controller'),
   PublicPages: () => import('#controllers/public_pages_controller'),
-  Session: () => import('#controllers/session_controller'),
   AdminMedia: () => import('#controllers/admin_media_controller'),
   AdminDashboard: () => import('#controllers/admin_dashboard_controller'),
+  AdminUsers: () => import('#controllers/admin_users_controller'),
 }

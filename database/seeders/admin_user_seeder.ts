@@ -11,6 +11,7 @@ export default class extends BaseSeeder {
         email: env.get('ADMIN_EMAIL'),
         password: env.get('ADMIN_PASSWORD'),
         fullName: 'Administrateur',
+        role: 'admin',
       }
     )
   }
