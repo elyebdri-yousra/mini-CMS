@@ -5,5 +5,6 @@
 
 export const controllers = {
   AdminPages: () => import('#controllers/admin_pages_controller'),
+  PublicPages: () => import('#controllers/public_pages_controller'),
   Session: () => import('#controllers/session_controller'),
 }
