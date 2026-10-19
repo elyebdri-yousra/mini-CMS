@@ -8,6 +8,7 @@ export type ScannedRoutes = {
     'session.create': { paramsTuple?: []; params?: {} }
     'session.store': { paramsTuple?: []; params?: {} }
     'session.destroy': { paramsTuple?: []; params?: {} }
+    'admin_dashboard': { paramsTuple?: []; params?: {} }
     'admin_pages.index': { paramsTuple?: []; params?: {} }
     'admin_pages.create': { paramsTuple?: []; params?: {} }
     'admin_pages.store': { paramsTuple?: []; params?: {} }
@@ -24,6 +25,7 @@ export type ScannedRoutes = {
   GET: {
     'home': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
+    'admin_dashboard': { paramsTuple?: []; params?: {} }
     'admin_pages.index': { paramsTuple?: []; params?: {} }
     'admin_pages.create': { paramsTuple?: []; params?: {} }
     'admin_pages.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
@@ -33,6 +35,7 @@ export type ScannedRoutes = {
   HEAD: {
     'home': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
+    'admin_dashboard': { paramsTuple?: []; params?: {} }
     'admin_pages.index': { paramsTuple?: []; params?: {} }
     'admin_pages.create': { paramsTuple?: []; params?: {} }
     'admin_pages.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
