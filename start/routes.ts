@@ -40,6 +40,15 @@ router
 
     router
       .group(() => {
+        router.get('/', [controllers.AdminPageVersions, 'index']).as('index')
+        router.get('compare', [controllers.AdminPageVersions, 'compare']).as('compare')
+        router.post(':versionId/restore', [controllers.AdminPageVersions, 'restore']).as('restore')
+      })
+      .prefix('admin/pages/:pageId/versions')
+      .as('admin_page_versions')
+
+    router
+      .group(() => {
         router.get('/', [controllers.AdminMedia, 'index']).as('index')
         router.post('/', [controllers.AdminMedia, 'store']).as('store')
         router.put(':id', [controllers.AdminMedia, 'update']).as('update')
