@@ -16,6 +16,9 @@ export type ScannedRoutes = {
     'admin_pages.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin_pages.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'admin_pages.togglePublish': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin_page_versions.index': { paramsTuple: [ParamValue]; params: {'pageId': ParamValue} }
+    'admin_page_versions.compare': { paramsTuple: [ParamValue]; params: {'pageId': ParamValue} }
+    'admin_page_versions.restore': { paramsTuple: [ParamValue,ParamValue]; params: {'pageId': ParamValue,'versionId': ParamValue} }
     'admin_media.index': { paramsTuple?: []; params?: {} }
     'admin_media.store': { paramsTuple?: []; params?: {} }
     'admin_media.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
@@ -35,6 +38,8 @@ export type ScannedRoutes = {
     'admin_pages.index': { paramsTuple?: []; params?: {} }
     'admin_pages.create': { paramsTuple?: []; params?: {} }
     'admin_pages.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin_page_versions.index': { paramsTuple: [ParamValue]; params: {'pageId': ParamValue} }
+    'admin_page_versions.compare': { paramsTuple: [ParamValue]; params: {'pageId': ParamValue} }
     'admin_media.index': { paramsTuple?: []; params?: {} }
     'admin_users.index': { paramsTuple?: []; params?: {} }
     'admin_users.create': { paramsTuple?: []; params?: {} }
@@ -48,6 +53,8 @@ export type ScannedRoutes = {
     'admin_pages.index': { paramsTuple?: []; params?: {} }
     'admin_pages.create': { paramsTuple?: []; params?: {} }
     'admin_pages.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin_page_versions.index': { paramsTuple: [ParamValue]; params: {'pageId': ParamValue} }
+    'admin_page_versions.compare': { paramsTuple: [ParamValue]; params: {'pageId': ParamValue} }
     'admin_media.index': { paramsTuple?: []; params?: {} }
     'admin_users.index': { paramsTuple?: []; params?: {} }
     'admin_users.create': { paramsTuple?: []; params?: {} }
@@ -58,6 +65,7 @@ export type ScannedRoutes = {
     'session.store': { paramsTuple?: []; params?: {} }
     'session.destroy': { paramsTuple?: []; params?: {} }
     'admin_pages.store': { paramsTuple?: []; params?: {} }
+    'admin_page_versions.restore': { paramsTuple: [ParamValue,ParamValue]; params: {'pageId': ParamValue,'versionId': ParamValue} }
     'admin_media.store': { paramsTuple?: []; params?: {} }
     'admin_users.store': { paramsTuple?: []; params?: {} }
   }

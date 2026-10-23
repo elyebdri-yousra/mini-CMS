@@ -1,0 +1,68 @@
+@layouts.app({ title: `Historique · ${page.title}` })
+  @page({ title: 'Historique des versions', description: page.title })
+    @slot('actions')
+      @link({
+        route: 'admin_pages.edit',
+        routeParams: { id: page.id },
+        class: 'inline-flex items-center justify-center gap-[7px] h-[38px] px-[15px] rounded-lg border border-line-2 bg-card text-ink text-sm font-medium hover:bg-paper transition',
+      })
+        Retour à la page
+      @end
+    @end
+
+    @if(versions.length === 0)
+      <p class="text-muted text-[14px]">Aucune version enregistrée pour le moment.</p>
+    @else
+      @if(versions.length >= 2)
+        <form method="GET" action="{{ urlFor('admin_page_versions.compare', { pageId: page.id }) }}" class="flex flex-wrap items-end gap-3 mb-6">
+          <div class="flex flex-col gap-1.5">
+            <label for="from" class="text-[13px] font-medium text-ink">Version A</label>
+            <select id="from" name="from" class="h-10 px-3 bg-field border border-line-2 rounded-lg text-ink text-sm">
+              @each(v in versions)
+                <option value="{{ v.id }}">{{ v.createdAt.toFormat('dd/MM/yyyy HH:mm') }} — {{ v.user ? (v.user.fullName ?? v.user.email) : 'utilisateur supprimé' }}</option>
+              @end
+            </select>
+          </div>
+          <div class="flex flex-col gap-1.5">
+            <label for="to" class="text-[13px] font-medium text-ink">Version B</label>
+            <select id="to" name="to" class="h-10 px-3 bg-field border border-line-2 rounded-lg text-ink text-sm">
+              @each(v in versions)
+                <option value="{{ v.id }}">{{ v.createdAt.toFormat('dd/MM/yyyy HH:mm') }} — {{ v.user ? (v.user.fullName ?? v.user.email) : 'utilisateur supprimé' }}</option>
+              @end
+            </select>
+          </div>
+          <button type="submit" class="h-10 px-4 rounded-lg border border-line-2 bg-card text-ink text-sm font-medium hover:bg-paper transition">
+            Comparer
+          </button>
+        </form>
+      @else
+        <p class="text-muted text-[14px] mb-6">Pas assez de versions pour comparer. Modifiez la page pour en créer une nouvelle.</p>
+      @end
+
+      <div class="bg-card border border-line-2 rounded-[14px] overflow-hidden">
+        @each(v in versions)
+          <div class="flex items-center justify-between gap-4 px-4 py-3 border-b border-line last:border-b-0">
+            <div>
+              <div class="font-medium text-ink">{{ v.createdAt.toFormat('dd/MM/yyyy à HH:mm') }}</div>
+              <div class="text-muted text-[12.5px]">
+                par {{ v.user ? (v.user.fullName ?? v.user.email) : 'utilisateur supprimé' }}
+                · {{ v.status === 'published' ? 'Publié' : 'Brouillon' }}
+              </div>
+            </div>
+            @form({
+              route: 'admin_page_versions.restore',
+              routeParams: { pageId: page.id, versionId: v.id },
+              method: 'POST',
+              'x-data': '{}',
+              'x-on:submit': "confirm('Restaurer cette version ? Le contenu actuel de la page sera remplacé.') || $event.preventDefault()",
+            })
+              <button type="submit" class="h-9 px-3 rounded-lg border border-line-2 bg-card text-ink text-[13px] font-medium hover:bg-paper transition">
+                Restaurer
+              </button>
+            @end
+          </div>
+        @end
+      </div>
+    @end
+  @end
+@end

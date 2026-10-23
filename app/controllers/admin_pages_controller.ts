@@ -2,6 +2,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import Page from '#models/page'
 import Media from '#models/media'
 import User from '#models/user'
+import PageVersion from '#models/page_version'
 import { pageValidator } from '#validators/page'
 import { DateTime } from 'luxon'
 
@@ -61,6 +62,7 @@ export default class AdminPagesController {
       publishedAt: data.status === 'published' ? DateTime.now() : null,
     })
     await page.save()
+    await PageVersion.snapshot(page, auth.user!.id)
 
     session.flash('success', 'Page créée avec succès.')
     response.redirect().toRoute('admin_pages.index')
@@ -72,7 +74,7 @@ export default class AdminPagesController {
     return view.render('pages/admin/pages/edit', { page, media })
   }
 
-  async update({ params, request, response, session }: HttpContext) {
+  async update({ params, request, response, session, auth }: HttpContext) {
     const page = await Page.findOrFail(params.id)
 
     const payload = request.only(['title', 'slug', 'excerpt', 'content', 'status', 'menuOrder'])
@@ -95,6 +97,7 @@ export default class AdminPagesController {
       page.publishedAt = null
     }
     await page.save()
+    await PageVersion.snapshot(page, auth.user!.id)
 
     session.flash('success', 'Page mise à jour avec succès.')
     response.redirect().toRoute('admin_pages.index')
@@ -102,6 +105,8 @@ export default class AdminPagesController {
 
   async destroy({ params, response, session }: HttpContext) {
     const page = await Page.findOrFail(params.id)
+    // sqlite n'applique pas ON DELETE CASCADE par défaut
+    await PageVersion.query().where('pageId', page.id).delete()
     await page.delete()
 
     session.flash('success', 'Page supprimée.')
@@ -109,11 +114,12 @@ export default class AdminPagesController {
   }
 
   // bouton rapide publier / dépublier depuis la liste
-  async togglePublish({ params, response, session }: HttpContext) {
+  async togglePublish({ params, response, session, auth }: HttpContext) {
     const page = await Page.findOrFail(params.id)
     page.status = page.status === 'published' ? 'draft' : 'published'
     page.publishedAt = page.status === 'published' ? DateTime.now() : null
     await page.save()
+    await PageVersion.snapshot(page, auth.user!.id)
 
     session.flash('success', page.status === 'published' ? 'Page publiée.' : 'Page dépubliée.')
     response.redirect().toRoute('admin_pages.index')

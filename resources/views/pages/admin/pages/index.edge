@@ -156,6 +156,14 @@
                     })
                       @svg('lucide:pencil', { width: 15, height: 15 })
                     @end
+                    @link({
+                      route: 'admin_page_versions.index',
+                      routeParams: { pageId: p.id },
+                      class: 'relative inline-grid place-items-center w-8 h-8 rounded-lg border border-line text-muted transition hover:bg-paper hover:text-ink hover:border-line-2',
+                      title: 'Historique des versions',
+                    })
+                      @svg('lucide:clock', { width: 15, height: 15 })
+                    @end
 
                     @form({
                       route: 'admin_pages.togglePublish',

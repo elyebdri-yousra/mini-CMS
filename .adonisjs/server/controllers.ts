@@ -4,10 +4,11 @@
  */
 
 export const controllers = {
-  Session: () => import('#controllers/session_controller'),
   AdminDashboard: () => import('#controllers/admin_dashboard_controller'),
   AdminMedia: () => import('#controllers/admin_media_controller'),
+  AdminPageVersions: () => import('#controllers/admin_page_versions_controller'),
   AdminPages: () => import('#controllers/admin_pages_controller'),
   AdminUsers: () => import('#controllers/admin_users_controller'),
   PublicPages: () => import('#controllers/public_pages_controller'),
+  Session: () => import('#controllers/session_controller'),
 }
