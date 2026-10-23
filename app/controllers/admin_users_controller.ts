@@ -1,5 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
+import PageVersion from '#models/page_version'
 import { createUserValidator, updateUserValidator } from '#validators/user'
 
 export default class AdminUsersController {
@@ -61,6 +62,8 @@ export default class AdminUsersController {
       }
     }
 
+    // sqlite n'applique pas ON DELETE SET NULL par défaut
+    await PageVersion.query().where('userId', user.id).update({ userId: null })
     await user.delete()
     session.flash('success', 'Utilisateur supprimé.')
     response.redirect().toRoute('admin_users.index')

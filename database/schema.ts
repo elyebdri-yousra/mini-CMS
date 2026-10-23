@@ -24,6 +24,33 @@ export class MediaSchema extends BaseModel {
   declare updatedAt: DateTime | null
 }
 
+export class PageVersionSchema extends BaseModel {
+  static $columns = ['content', 'createdAt', 'excerpt', 'id', 'menuOrder', 'pageId', 'showInMenu', 'slug', 'status', 'title', 'userId'] as const
+  $columns = PageVersionSchema.$columns
+  @column()
+  declare content: string | null
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column()
+  declare excerpt: string | null
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare menuOrder: number
+  @column()
+  declare pageId: number
+  @column()
+  declare showInMenu: boolean
+  @column()
+  declare slug: string
+  @column()
+  declare status: string
+  @column()
+  declare title: string
+  @column()
+  declare userId: number | null
+}
+
 export class PageSchema extends BaseModel {
   static $columns = ['content', 'coverMediaId', 'createdAt', 'excerpt', 'id', 'menuOrder', 'publishedAt', 'showInMenu', 'slug', 'status', 'title', 'updatedAt', 'userId'] as const
   $columns = PageSchema.$columns
